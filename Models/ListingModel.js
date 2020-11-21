@@ -1,3 +1,4 @@
+'use strict'
 const mongoose = require('mongoose')
 
 const listingSchema = new mongoose.Schema({
@@ -6,8 +7,30 @@ const listingSchema = new mongoose.Schema({
         required: true,
         max: 100
     },
-    listing: {
-
+    username: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
+        required: true,
+    },
+    img: String,
+    listing_name: {
+        type: String,
+        required: true,
+    },
+    category: {
+        type: String,
+        required: true,
+    },
+    location: {
+        type: String,
+        required: true,
+    },
+    expiry_date: {
+        type: Date,
+        required: true,
     },
     created_at: {
         type: Date,
@@ -21,6 +44,6 @@ const listingSchema = new mongoose.Schema({
     }
 })
 
-const ListingModel = mongoose.model('User', listingSchema)
+const ListingModel = mongoose.model('Listings', listingSchema)
 
 module.exports = ListingModel

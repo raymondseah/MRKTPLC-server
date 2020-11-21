@@ -3,6 +3,9 @@ const express = require('express')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
+
+// controllers
+const listingControllers = require('./Controllers/ListingController')
 const app = express();
 const port = process.env.PORT;
 
@@ -29,6 +32,8 @@ app.get('/api/v1', (req, res) => {
         message: "Welcome to FOOD-MRKTPLC app"
     })
 })
+
+app.get('/api/v1/listings', listingControllers.showAllListings)
 
 // connect to DB, then inititate Express app
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })

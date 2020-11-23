@@ -10,7 +10,7 @@ const controllers = {
             .catch(err => {
                 res.json(err)
             })
-    }
+    },
 }
 
 module.exports = controllers

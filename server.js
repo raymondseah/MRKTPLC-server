@@ -34,6 +34,9 @@ app.get('/api/v1', (req, res) => {
     })
 })
 
+app.get('/api/v1/listings/all', listingControllers.showAllListings)
+app.post('/api/v1/listings/new', listingControllers.createListing)
+
 // user registration
 app.post('/api/v1/users/register', usersController.register)
 

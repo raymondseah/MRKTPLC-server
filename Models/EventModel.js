@@ -1,12 +1,24 @@
 'use strict'
-
-
 const mongoose = require('mongoose')
 
 const EventsSchema = new mongoose.Schema({
+    hosted_by:{
+        type:String,
+        required:true,
+    },
+    hosted_date:{
+        type:Date,
+        default:Date.now,
+    },
     location: {
         type: String,
         required: true,
+    },
+    description: {
+        type:String,
+    },
+    listed_product: {
+        type:String
     },
     created_at: {
         type: Date,

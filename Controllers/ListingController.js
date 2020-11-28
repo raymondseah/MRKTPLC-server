@@ -12,7 +12,7 @@ const controllers = {
             })
     },
     createListing: (req, res) => {
-        console.log(req)
+        console.log(req.body)
         ListingModel.create({
             description: req.body.description,
             img: req.body.img,

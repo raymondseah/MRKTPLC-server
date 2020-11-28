@@ -7,6 +7,8 @@ const userControllers = {
     register: (req, res) => {
         // try the library at https://ajv.js.org/ to validate user's input
 
+        console.log(req.body)
+
         UserModel.findOne({
             email: req.body.email
         })

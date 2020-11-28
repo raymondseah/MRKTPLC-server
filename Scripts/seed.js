@@ -12,7 +12,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
         console.log('MongoDB connection successful')
     })
     .then(response => {
-        listingModel.insertMany(mockLeeeistings)
+        listingModel.insertMany(mockListings)
             .then(insertResponse => {
                 console.log('Data seeding successful')
             })

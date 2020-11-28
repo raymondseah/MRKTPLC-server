@@ -33,7 +33,8 @@ app.get('/api/v1', (req, res) => {
     })
 })
 
-app.get('/api/v1/listings', listingControllers.showAllListings)
+app.get('/api/v1/listings/all', listingControllers.showAllListings)
+app.post('/api/v1/listings/new', listingControllers.createListing)
 
 // connect to DB, then inititate Express app
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -44,13 +44,65 @@ const userControllers = {
                 })
                     .then(createResult => {
                         if (createResult) {
+
+                            console.log(`Inside if createresult block`)
+                               
+                            // login successful, generate JWT
+                            const token = jwt.sign({
+                                username: createResult.username,
+                                email: createResult.email,
+                            }, process.env.JWT_SECRET, {
+                                algorithm: "HS384",
+                                expiresIn: "1h"
+                            })
+
+                            console.log(token, `jwt token`)
+            
+                            // decode JWT to get raw values
+                            const rawJWT = jwt.decode(token)
                             res.statusCode = 201
+
+                            // return token as json response
                             res.json({
-                                "success": true,
-                                "message": "User created"
+                                success: true,
+                                token: token,
+                                expiresAt: rawJWT.exp
                             })
                             return
                         }
+
+                        UserModel.findOne({
+                            email: req.body.email
+                        })
+                            .then(userResult => {
+                
+                                // login successful, generate JWT
+                                const token = jwt.sign({
+                                    username: userResult.username,
+                                    email: userResult.email,
+                                }, process.env.JWT_SECRET, {
+                                    algorithm: "HS384",
+                                    expiresIn: "1h"
+                                })
+                
+                                // decode JWT to get raw values
+                                const rawJWT = jwt.decode(token)
+                
+                                // return token as json response
+                                res.json({
+                                    success: true,
+                                    token: token,
+                                    expiresAt: rawJWT.exp
+                                })
+                            })
+                            .catch(err => {
+                                res.statusCode = 500
+                                res.json({
+                                    success: false,
+                                    message: "unable to login due to unexpected error"
+                                })
+                            })
+
                     })
                     .catch(err => {
                         res.statusCode = 400

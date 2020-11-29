@@ -65,7 +65,8 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
     function verifyJWT(req, res, next) {
         // get the jwt token from the request header
-        const authToken = req.headers.auth_token
+        const authToken = req.headers['authorization']
+        console.log(authToken)
             
         // check if authToken header value is empty, return err if empty
         if (!authToken) {

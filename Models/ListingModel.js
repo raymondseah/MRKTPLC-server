@@ -4,12 +4,12 @@ const mongoose = require('mongoose')
 const listingSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
+        // required: true,
         max: 100
     },
     username: {
         type: String,
-        required: true,
+        // required: true,
     },
     description: {
         type: String,

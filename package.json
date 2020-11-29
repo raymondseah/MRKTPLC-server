@@ -16,7 +16,12 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.1",
+<<<<<<< HEAD
     "mongoose": "^5.10.15",
+=======
+    "mongoose": "^5.10.17",
+    "nodemon": "^2.0.6",
+>>>>>>> bcb889323ac86085b44538b367ec331afd851216
     "uuid": "^8.3.1"
   },
   "devDependencies": {},

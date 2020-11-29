@@ -7,6 +7,7 @@ const cors = require('cors')
 // controllers
 const usersController = require('./Controllers/UserController')
 const listingControllers = require('./Controllers/ListingController')
+const eventControllers = require('./Controllers/EventController')
 const app = express();
 const port = process.env.PORT;
 
@@ -47,7 +48,21 @@ app.get('/api/v1/users/profile', verifyJWT, usersController.getUserProfile)
  * PRODUCT LISTING ROUTES
  **/
 
-app.get('/api/v1/listings', listingControllers.showAllListings)
+app.get('/api/v1/listings/all', listingControllers.showAllListings)
+app.post('/api/v1/listings/new', listingControllers.createListing)
+
+
+/*========================= */
+/*======Events Routes====== */
+/*========================= */
+
+app.get('/api/vi/events/all' , eventControllers.showAllEvents)
+app.post('/api/vi/events/new' , eventControllers.createEvent)
+
+/*========================= */
+/*===Listeners Routes====== */
+/*========================= */
+
 
 // connect to DB, then inititate Express app
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })

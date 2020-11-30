@@ -15,11 +15,12 @@ const controllers = {
             })
     },
     createEvent: (req, res) => {
-        console.log(req)
+
+        console.log(res.locals.jwtData.username)
 
         eventModel.create({
-            hosted_by: req.body.hosted_by,
-            // hosted_date: req.body,
+            hosted_by: res.locals.jwtData.username,
+            hosted_date: req.body.hosted_date,
             location: req.body.location,
             description: req.body.description,
             listed_product: req.body.listed_product,

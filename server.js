@@ -61,7 +61,7 @@ app.get('/api/v1/listings', listingControllers.showAllListings)
 /*========================= */
 
 app.get('/api/vi/events/all' , eventControllers.showAllEvents)
-app.post('/api/vi/events/new' , eventControllers.createEvent)
+app.post('/api/vi/events/new' , verifyJWT,eventControllers.createEvent)
 
 /*========================= */
 /*===Listeners Routes====== */

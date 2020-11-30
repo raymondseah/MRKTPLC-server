@@ -12,7 +12,8 @@ const controllers = {
             })
     },
     createListing: (req, res) => {
-        console.log(req)
+        console.log(req.body)
+        console.log(res.locals.jwtData)
         ListingModel.create({
             description: req.body.description,
             img: req.body.img,
@@ -20,6 +21,8 @@ const controllers = {
             category: req.body.category,
             location: req.body.location,
             expiry_date: req.body.expiry_date,
+            email: res.locals.jwtData.email,
+            username: res.locals.jwtData.username
         })
             .then(result => {
                 res.json(result)

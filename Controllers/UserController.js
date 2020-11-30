@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken')
 const SHA256 = require("crypto-js/sha256")
 const uuid = require('uuid')
-const UserModel = require('../models/userModel')
+const UserModel = require('./../Models/UserModel')
 
 const userControllers = {
     register: (req, res) => {

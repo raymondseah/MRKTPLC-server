@@ -10,6 +10,9 @@ const EventsSchema = new mongoose.Schema({
         type:Date,
         default:Date.now,
     },
+    hosted_time:{
+        type:String
+    },
     location: {
         type: String,
         required: true,

@@ -3,17 +3,25 @@ const express = require('express')
 const mongoose = require('mongoose')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
+const methodOverride = require('method-override')
 
 // controllers
 const usersController = require('./Controllers/UserController')
 const listingControllers = require('./Controllers/ListingController')
 const eventControllers = require('./Controllers/EventController')
+const messageControllers = require('./Controllers/MessageController')
 const app = express();
 const port = process.env.PORT;
 
 
 const mongoURI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`
 mongoose.set('useFindAndModify', false)
+
+// =======================================
+//           METHOD-OVERRIDE
+// =======================================
+// tells Express app to make use of the imported method-override library
+app.use(methodOverride('_method'))
 
 app.use(express.urlencoded({
     extended: true
@@ -60,8 +68,20 @@ app.get('/api/v1/listings', listingControllers.showAllListings)
 /*======Events Routes====== */
 /*========================= */
 
-app.get('/api/vi/events/all' , eventControllers.showAllEvents)
-app.post('/api/vi/events/new' , verifyJWT,eventControllers.createEvent)
+app.get('/api/v1/events' , eventControllers.showAllEvents)
+app.post('/api/v1/events/new' , verifyJWT,eventControllers.createEvent)
+app.get('/api/v1/events/:id' ,eventControllers.getEventById)
+app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
+
+app.get('/api/v1/currentuser/events', verifyJWT, eventControllers.getEventByUsers)
+
+
+/*========================= */
+/*=====Message Routes====== */
+/*========================= */
+
+app.post('/api/v1/send-message', messageControllers.sendMessage)
+
 
 /*========================= */
 /*===Listeners Routes====== */

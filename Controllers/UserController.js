@@ -5,7 +5,6 @@ const UserModel = require('./../Models/UserModel')
 
 const userControllers = {
     register: (req, res) => {
-        // try the library at https://ajv.js.org/ to validate user's input
 
         console.log(req.body)
 
@@ -44,8 +43,6 @@ const userControllers = {
                 })
                     .then(createResult => {
                         if (createResult) {
-
-                            console.log(`Inside if createresult block`)
                                
                             // login successful, generate JWT
                             const token = jwt.sign({
@@ -99,7 +96,7 @@ const userControllers = {
                                 res.statusCode = 500
                                 res.json({
                                     success: false,
-                                    message: "unable to login due to unexpected error"
+                                    message: "Unable to login due to unexpected error"
                                 })
                             })
 
@@ -176,17 +173,30 @@ const userControllers = {
                 res.statusCode = 500
                 res.json({
                     success: false,
-                    message: "unable to login due to unexpected error"
+                    message: "Unable to login due to unexpected error"
                 })
             })
     },
 
     getUserProfile: (req, res) => {
-        res.json({
-            username: req.body.username,
-            email: req.body.email,
-            location: req.body.location
+
+        UserModel.findOne({
+            email: req.body.email
         })
+            .then(result => {
+                // check for user, if user cannot be found, return err as json response
+                if (!result) {
+                    res.statusCode = 404
+                    res.json()
+                    return
+                }
+                res.json(result)
+            })
+            .catch(err => {
+                res.statusCode = 500
+                res.json(err)
+            })
+
     }
 
 }

@@ -6,7 +6,6 @@ const UserModel = require('./../Models/UserModel')
 
 const userControllers = {
     register: (req, res) => {
-        // try the library at https://ajv.js.org/ to validate user's input
 
         UserModel.findOne({
             email: req.body.email
@@ -129,11 +128,19 @@ const userControllers = {
     },
 
     getUserProfile: (req, res) => {
-        res.json({
-            username: req.body.username,
-            email: req.body.email,
+        console.log(res.locals.jwtData)
+
+        UserModel.findOneAndUpdate({
+            email: res.locals.jwtData.email
+        },{
             location: req.body.location
         })
+            .then(result => {
+                res.json(result)
+            })
+            .catch(err => {
+                res.json(err)
+            })
     }
 
 }

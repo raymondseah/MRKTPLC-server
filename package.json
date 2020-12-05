@@ -19,13 +19,9 @@
     "lodash": "^4.17.20",
     "method-override": "^3.0.0",
     "moment": "^2.29.1",
-<<<<<<< HEAD
-    "mongoose": "^5.10.15",
-=======
     "mongoose": "^5.10.17",
     "nanoid": "^3.1.20",
     "nodemon": "^2.0.6",
->>>>>>> bcb889323ac86085b44538b367ec331afd851216
     "uuid": "^8.3.1"
   },
   "devDependencies": {},

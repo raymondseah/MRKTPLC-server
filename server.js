@@ -35,8 +35,19 @@ app.get('/api/v1', (req, res) => {
     })
 })
 
-app.get('/api/v1/listings/all', listingControllers.showAllListings)
-app.post('/api/v1/listings/new', verifyJWT, listingControllers.createListing)
+
+// create listing
+app.post('/api/v1/users/listing/new', verifyJWT, listingControllers.createListing)
+// get user listings
+app.get('/api/v1/users/listings', verifyJWT, listingControllers.getUserListings)
+// get all listings
+app.get('/api/v1/listings/all', listingControllers.getAllListings)
+// get single listing
+app.get('/api/v1/listings/:slug', listingControllers.getListing)
+// update listing
+app.patch('/api/v1/listings/:slug', verifyJWT, listingControllers.editListing)
+// delete listing
+app.delete('/api/v1/listings/:slug', listingControllers.deleteListing)
 
 // user registration
 app.post('/api/v1/users/register', usersController.register)
@@ -47,21 +58,12 @@ app.post('/api/v1/users/login', usersController.login)
 // user profile route
 app.get('/api/v1/users/profile', verifyJWT, usersController.getUserProfile)
 
-/**
- * PRODUCT LISTING ROUTES
- **/
-
-app.get('/api/v1/listings', listingControllers.showAllListings)
-
-
-
-
 /*========================= */
 /*======Events Routes====== */
 /*========================= */
 
-app.get('/api/vi/events/all' , eventControllers.showAllEvents)
-app.post('/api/vi/events/new' , eventControllers.createEvent)
+app.get('/api/vi/events/all', eventControllers.showAllEvents)
+app.post('/api/vi/events/new', eventControllers.createEvent)
 
 /*========================= */
 /*===Listeners Routes====== */
@@ -84,7 +86,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 function verifyJWT(req, res, next) {
     // get the jwt token from the request header
-    const authToken = req.headers['authorization']
+    const authToken = req.headers.auth_token
     console.log(authToken)
     // check if authToken header value is empty, return err if empty
     if (!authToken) {

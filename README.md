@@ -7,3 +7,4 @@
 -   mongoose
 -   uuid
 -   moment
+-   lodash

@@ -1,3 +1,4 @@
+'use strict'
 const jwt = require('jsonwebtoken')
 const SHA256 = require("crypto-js/sha256")
 const uuid = require('uuid')

@@ -11,7 +11,7 @@ const userControllers = {
             email: req.body.email
         })
             .then(result => {
-                // if found in DB, means email has already been taken, redirect to registration page
+                // if found in DB, means email has already been taken
                 if (result) {
                     res.statusCode = 400
                     res.json({
@@ -42,14 +42,62 @@ const userControllers = {
                 })
                     .then(createResult => {
                         if (createResult) {
-                            res.statusCode = 201
+
+                            // login successful, generate JWT
+                            const token = jwt.sign({
+                                username: createResult.username,
+                                email: createResult.email,
+                            }, process.env.JWT_SECRET, {
+                                algorithm: "HS384",
+                                expiresIn: "1h"
+                            })
+
+                            // decode JWT to get raw values
+                            const rawJWT = jwt.decode(token)
+
+                            // return token as json response
                             res.json({
-                                "success": true,
-                                "message": "User created"
+                                success: true,
+                                token: token,
+                                expiresAt: rawJWT.exp
                             })
                             return
-                        }
+                    }
+
+                    UserModel.findOne({
+                        email: req.body.email
                     })
+                        .then(userResult => {
+
+                            // login successful, generate JWT
+                            const token = jwt.sign({
+                                username: userResult.username,
+                                email: userResult.email,
+                            }, process.env.JWT_SECRET, {
+                                algorithm: "HS384",
+                                expiresIn: "1h"
+                            })
+
+                            // decode JWT to get raw values
+                            const rawJWT = jwt.decode(token)
+
+                            // return token as json response
+                            res.json({
+                                success: true,
+                                token: token,
+                                expiresAt: rawJWT.exp
+                            })
+                        })
+                        .catch(err => {
+                            res.statusCode = 500
+                            res.json({
+                                success: false,
+                                message: "unable to login due to unexpected error"
+                            })
+                        })
+
+                })
+
                     .catch(err => {
                         res.statusCode = 400
                         res.json({
@@ -128,10 +176,24 @@ const userControllers = {
     },
 
     getUserProfile: (req, res) => {
+
+        UserModel.find({
+            username: res.locals.jwtData.username
+        })
+            .then(userResults => {
+                res.json(userResults)
+            })
+            .catch(err => {
+                res.json(err)
+            })
+
+    },
+
+    editUserProfile: (req, res) => {
         console.log(res.locals.jwtData)
 
         UserModel.findOneAndUpdate({
-            email: res.locals.jwtData.email
+            username: res.locals.jwtData.username
         },{
             location: req.body.location
         })

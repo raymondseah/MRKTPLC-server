@@ -73,8 +73,8 @@ app.post('/api/v1/events/new', verifyJWT, eventControllers.createEvent)
 app.get('/api/v1/events/:id', eventControllers.getEventById)
 app.get('/api/v1/events', eventControllers.showAllEvents)
 app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
-
 app.get('/api/v1/users/events', verifyJWT, eventControllers.getEventByUsers)
+
 
 
 /*========================= */
@@ -102,6 +102,7 @@ mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
         console.log(err)
     })
 
+
 function verifyJWT(req, res, next) {
     // get the jwt token from the request header
     const authToken = req.headers.auth_token
@@ -126,6 +127,7 @@ function verifyJWT(req, res, next) {
         next()
     } catch (err) {
         // if fail, return error msg
+
         res.json({
             success: false,
             message: "Auth token is invalid"

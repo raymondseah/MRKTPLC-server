@@ -52,8 +52,11 @@ const userControllers = {
                                 expiresIn: "1h"
                             })
 
+                            console.log(token, `jwt token`)
+            
                             // decode JWT to get raw values
                             const rawJWT = jwt.decode(token)
+                            res.statusCode = 201
 
                             // return token as json response
                             res.json({
@@ -62,49 +65,48 @@ const userControllers = {
                                 expiresAt: rawJWT.exp
                             })
                             return
-                    }
+                        }
 
-                    UserModel.findOne({
-                        email: req.body.email
+                            UserModel.findOne({
+                                email: req.body.email
+                            })
+                                .then(userResult => {
+                    
+                                    // login successful, generate JWT
+                                    const token = jwt.sign({
+                                        username: userResult.username,
+                                        email: userResult.email,
+                                    }, process.env.JWT_SECRET, {
+                                        algorithm: "HS384",
+                                        expiresIn: "1h"
+                                    })
+                    
+                                    // decode JWT to get raw values
+                                    const rawJWT = jwt.decode(token)
+                    
+                                    // return token as json response
+                                    res.json({
+                                        success: true,
+                                        token: token,
+                                        expiresAt: rawJWT.exp
+                                    })
+                                })
+
+                                .catch(err => {
+                                    res.statusCode = 500
+                                    res.json({
+                                        success: false,
+                                        message: "Unable to login due to unexpected error"
+                                    })
+                                })
                     })
-                        .then(userResult => {
-
-                            // login successful, generate JWT
-                            const token = jwt.sign({
-                                username: userResult.username,
-                                email: userResult.email,
-                            }, process.env.JWT_SECRET, {
-                                algorithm: "HS384",
-                                expiresIn: "1h"
-                            })
-
-                            // decode JWT to get raw values
-                            const rawJWT = jwt.decode(token)
-
-                            // return token as json response
-                            res.json({
-                                success: true,
-                                token: token,
-                                expiresAt: rawJWT.exp
-                            })
-                        })
-                        .catch(err => {
-                            res.statusCode = 500
-                            res.json({
-                                success: false,
-                                message: "unable to login due to unexpected error"
-                            })
-                        })
-
+                .catch(err => {
+                    res.statusCode = 400
+                    res.json({
+                        "success": false,
+                        "message": "Unable to create user"
+                    })
                 })
-
-                    .catch(err => {
-                        res.statusCode = 400
-                        res.json({
-                            "success": false,
-                            "message": "Unable to create user"
-                        })
-                    })
             })
             .catch(err => {
                 res.statusCode = 400
@@ -170,7 +172,7 @@ const userControllers = {
                 res.statusCode = 500
                 res.json({
                     success: false,
-                    message: "unable to login due to unexpected error"
+                    message: "Unable to login due to unexpected error"
                 })
             })
     },
@@ -203,6 +205,7 @@ const userControllers = {
             .catch(err => {
                 res.json(err)
             })
+
     }
 
 }

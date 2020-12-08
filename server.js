@@ -55,7 +55,7 @@ app.get('/api/v1/listings/:slug', listingControllers.getListing)
 // update listing
 app.patch('/api/v1/listings/:slug', verifyJWT, listingControllers.editListing)
 // delete listing
-app.delete('/api/v1/listings/:slug', listingControllers.deleteListing)
+app.delete('/api/v1/listings/:slug', verifyJWT, listingControllers.deleteListing)
 
 // user registration
 app.post('/api/v1/users/register', usersController.register)
@@ -75,6 +75,7 @@ app.get('/api/v1/events/:id', eventControllers.getEventById)
 app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
 
 app.get('/api/v1/currentuser/events', verifyJWT, eventControllers.getEventByUsers)
+
 
 
 

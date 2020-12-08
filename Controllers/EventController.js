@@ -21,7 +21,7 @@ const controllers = {
         eventModel.create({
             hosted_by: res.locals.jwtData.username,
             hosted_date: req.body.hosted_date,
-            hosted_time:req.body.hosted_time,
+            hosted_time: req.body.hosted_time,
             location: req.body.location,
             description: req.body.description,
             listed_product: req.body.listed_product,
@@ -94,21 +94,21 @@ const controllers = {
             })
 
     },
-    getEventByUsers: (req,res) => {
+    getEventByUsers: (req, res) => {
         console.log(res.locals.jwtData.username)
-        
+
         eventModel.find({
-            hosted_by:res.locals.jwtData.username
+            hosted_by: res.locals.jwtData.username
         })
-        .then(results => {
-            console.log('Works')
-            res.json(results)
-        })
-        .catch(err => {
-            console.log('Does not work')
-            res.statusCode = 500
-            res.json(err)
-        })
+            .then(results => {
+                console.log('Works')
+                res.json(results)
+            })
+            .catch(err => {
+                console.log('Does not work')
+                res.statusCode = 500
+                res.json(err)
+            })
     }
 }
 

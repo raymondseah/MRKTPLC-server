@@ -32,6 +32,15 @@ const EventsSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    contact_number: {
+        type:Number,
+        required:true,
+    },
+    people_joining: {
+        type:[],
+        unique:true,
+
     }
 })
 

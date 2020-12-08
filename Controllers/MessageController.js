@@ -23,6 +23,7 @@ const messageControllers = {
             }
         )
             .then(response => {
+                console.log('success')
                 res.json({
                     success: true,
                     message: "successfully sent"

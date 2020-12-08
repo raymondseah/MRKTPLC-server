@@ -73,7 +73,8 @@ app.post('/api/v1/events/new' , verifyJWT,eventControllers.createEvent)
 app.get('/api/v1/events/:id' ,eventControllers.getEventById)
 app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
 
-app.get('/api/v1/currentuser/events', verifyJWT, eventControllers.getEventByUsers)
+app.get('/api/v1/users/events', verifyJWT, eventControllers.getEventByUsers)
+app.patch('/api/v1/events/:id', verifyJWT, eventControllers.addPeopleToEvent)
 
 
 /*========================= */

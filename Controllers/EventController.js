@@ -24,7 +24,7 @@ const controllers = {
             hosted_time: req.body.hosted_time,
             location: req.body.location,
             description: req.body.description,
-            listed_product: req.body.listed_product,
+            contact_number: req.body.contact_number,
 
         })
             .then(result => {
@@ -41,7 +41,7 @@ const controllers = {
             .catch(err => {
                 res.statusCode = 500
                 res.json(err)
-                console.log('error')
+                console.log(err)
             })
     },
     getEventById: (req, res) => {
@@ -107,6 +107,23 @@ const controllers = {
             .catch(err => {
                 console.log('Does not work')
                 res.statusCode = 500
+                res.json(err)
+            })
+    },
+    addPeopleToEvent: (req, res) => {
+        console.log(req.body)
+        let updateObject = req.body
+        eventModel.findOneAndUpdate(
+            {
+                _id: req.params.id
+            }, {
+            $push: { people_joining: updateObject.people_joining },
+        }
+        )
+            .then(result => {
+                res.json(result)
+            })
+            .catch(err => {
                 res.json(err)
             })
     }

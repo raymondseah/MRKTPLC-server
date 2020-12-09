@@ -72,20 +72,45 @@ const controllers = {
             })
     },
     editListing: (req, res) => {
-        let slug = req.params.slug
+        let oldSlug = req.params.slug
+        let newListingName = _.kebabCase(req.body.listing_name)
+        console.log("req" + req.body)
+        console.log(newListingName)
+        const id = nanoid()
+        console.log(id)
+        let newSlug = newListingName + "-" + id
         let updateObject = req.body
-        ListingModel.findOneAndUpdate({
-            slug: slug,
-        }, {
-            $set: updateObject
+        if (oldSlug !== newSlug) {
+            ListingModel.findOneAndUpdate({
+                slug: oldSlug,
+            }, {
+                $set: updateObject,
+                slug: newSlug
+            }
+            )
+                .then(result => {
+                    res.json(result)
+                    console.log('newslug')
+                })
+                .catch(err => {
+                    res.json(err)
+                })
         }
-        )
-            .then(result => {
-                res.json(result)
-            })
-            .catch(err => {
-                res.json(err)
-            })
+        else {
+            ListingModel.findOneAndUpdate({
+                slug: oldSlug,
+            }, {
+                $set: updateObject,
+            }
+            )
+                .then(result => {
+                    res.json(result)
+                    console.log('oldslug')
+                })
+                .catch(err => {
+                    res.json(err)
+                })
+        }
     },
     deleteListing: (req, res) => {
         let slug = req.params.slug

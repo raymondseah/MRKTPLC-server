@@ -43,9 +43,12 @@ app.get('/api/v1', (req, res) => {
     })
 })
 
+/*========================= */
+/*=====Listing Routes====== */
+/*========================= */
 
 // create listing
-app.post('/api/v1/users/listing/new', verifyJWT, listingControllers.createListing)
+app.post('/api/v1/users/listings/new', verifyJWT, listingControllers.createListing)
 // get user listings
 app.get('/api/v1/users/listings', verifyJWT, listingControllers.getUserListings)
 // get all listings
@@ -57,7 +60,6 @@ app.patch('/api/v1/listings/:slug', verifyJWT, listingControllers.editListing)
 // delete listing
 app.delete('/api/v1/listings/:slug', verifyJWT, listingControllers.deleteListing)
 
-
 // user registration
 app.post('/api/v1/users/register', usersController.register)
 // user login route
@@ -65,6 +67,7 @@ app.post('/api/v1/users/login', usersController.login)
 // user profile route
 app.get('/api/v1/users/profile', verifyJWT, usersController.getUserProfile)
 app.patch('/api/v1/users/profile', verifyJWT, usersController.editUserProfile)
+
 
 /*========================= */
 /*======Events Routes====== */
@@ -76,6 +79,7 @@ app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
 app.get('/api/v1/users/events', verifyJWT, eventControllers.getEventByUsers)
 app.patch('/api/v1/events/:id/join', verifyJWT, eventControllers.addPeopleToEvent)
 app.patch('/api/v1/events/:id/remove', verifyJWT, eventControllers.removeUserFromEvent)
+
 
 
 /*========================= */

@@ -43,9 +43,12 @@ app.get('/api/v1', (req, res) => {
     })
 })
 
+/*========================= */
+/*=====Listing Routes====== */
+/*========================= */
 
 // create listing
-app.post('/api/v1/users/listing/new', verifyJWT, listingControllers.createListing)
+app.post('/api/v1/users/listings/new', verifyJWT, listingControllers.createListing)
 // get user listings
 app.get('/api/v1/users/listings', verifyJWT, listingControllers.getUserListings)
 // get all listings
@@ -64,6 +67,7 @@ app.post('/api/v1/users/login', usersController.login)
 // user profile route
 app.get('/api/v1/users/profile', verifyJWT, usersController.getUserProfile)
 app.patch('/api/v1/users/profile', verifyJWT, usersController.editUserProfile)
+
 
 /*========================= */
 /*======Events Routes====== */

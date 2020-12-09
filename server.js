@@ -74,8 +74,8 @@ app.get('/api/v1/events/:id', eventControllers.getEventById)
 app.get('/api/v1/events', eventControllers.showAllEvents)
 app.delete('/api/v1/events/:id', eventControllers.deleteEventsById)
 app.get('/api/v1/users/events', verifyJWT, eventControllers.getEventByUsers)
-app.patch('/api/v1/events/:id', verifyJWT, eventControllers.addPeopleToEvent)
-
+app.patch('/api/v1/events/:id/join', verifyJWT, eventControllers.addPeopleToEvent)
+app.patch('/api/v1/events/:id/remove', verifyJWT, eventControllers.removeUserFromEvent)
 
 
 /*========================= */

@@ -39,7 +39,8 @@ const EventsSchema = new mongoose.Schema({
     },
     people_joining: {
         type:[],
-        unique:true,
+      
+        
 
     }
 })

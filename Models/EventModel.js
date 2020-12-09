@@ -38,14 +38,9 @@ const EventsSchema = new mongoose.Schema({
         required: true,
     },
     people_joining: {
-<<<<<<< HEAD
         type: [],
-        unique: true,
-=======
-        type:[],
-      
-        
->>>>>>> master
+
+
 
     }
 })

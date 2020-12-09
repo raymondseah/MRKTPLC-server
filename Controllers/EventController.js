@@ -126,7 +126,25 @@ const controllers = {
             .catch(err => {
                 res.json(err)
             })
-    }
+    },
+    removeUserFromEvent : (req,res) =>{
+        console.log(req.body)
+        let updateObject = req.body
+        eventModel.findOneAndUpdate(
+            {
+                _id: req.params.id
+            }, {
+            $pull: { people_joining: updateObject.people_joining },
+        }
+        )
+            .then(result => {
+                res.json(result)
+            })
+            .catch(err => {
+                res.json(err)
+            })
+    },
+    
 }
 
 module.exports = controllers

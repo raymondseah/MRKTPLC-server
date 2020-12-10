@@ -120,7 +120,7 @@ const controllers = {
         })
             .then(result => {
                 ListingModel.deleteOne({
-                    slug: slug
+                    slug: result.slug
                 })
                     .then(deleteResult => {
                         res.json(deleteResult)
